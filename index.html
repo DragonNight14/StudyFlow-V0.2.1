@@ -325,7 +325,7 @@
             // You could track this event in your analytics
         });
     </script>
-    <script src="enhanced-settings.js"></script>
+    <script src="settings-simple.js"></script>
     <script src="assignment-editor.js"></script>
     <script src="background-manager.js"></script>
     <script src="api-integration.js"></script>
@@ -376,13 +376,40 @@
                 }
                 
                 // Core managers
-                settingsManager = new SettingsManager(tracker);
-                apiIntegration = new APIIntegration(tracker);
+                settingsManager = new SimpleSettingsManager(tracker);
                 
-                // Feature managers
-                analytics = new AdvancedAnalytics(tracker);
-                cloudSync = new CloudSync(tracker);
-                premiumThemes = new PremiumThemes(tracker);
+                try {
+                    apiIntegration = new APIIntegration(tracker);
+                    console.log('✅ API integration initialized');
+                } catch (e) {
+                    console.warn('⚠️ API integration not available:', e.message);
+                    apiIntegration = { initializeConnections: () => Promise.resolve() }; // Mock object
+                }
+                
+                // Feature managers (with error handling)
+                try {
+                    analytics = new AdvancedAnalytics(tracker);
+                    console.log('✅ Analytics initialized');
+                } catch (e) {
+                    console.warn('⚠️ Analytics not available:', e.message);
+                    analytics = null;
+                }
+                
+                try {
+                    cloudSync = new CloudSync(tracker);
+                    console.log('✅ Cloud sync initialized');
+                } catch (e) {
+                    console.warn('⚠️ Cloud sync not available:', e.message);
+                    cloudSync = null;
+                }
+                
+                try {
+                    premiumThemes = new PremiumThemes(tracker);
+                    console.log('✅ Premium themes initialized');
+                } catch (e) {
+                    console.warn('⚠️ Premium themes not available:', e.message);
+                    premiumThemes = null;
+                }
                 
                 console.log('✅ All managers initialized successfully');
                 
@@ -399,7 +426,11 @@
                 
                 // Step 6: Load saved theme and ensure background is applied
                 console.log('🎨 Loading saved theme...');
-                premiumThemes.loadSavedTheme();
+                if (premiumThemes && premiumThemes.loadSavedTheme) {
+                    premiumThemes.loadSavedTheme();
+                } else {
+                    console.log('⚠️ Premium themes not available, using default theme');
+                }
                 
                 // Force background restoration after all managers are ready
                 console.log('🖼️ Ensuring background is properly applied...');
@@ -485,17 +516,45 @@
                 
             } catch (error) {
                 console.error('❌ Error during initialization:', error);
-                // Show user-friendly error message
-                const errorDiv = document.createElement('div');
-                errorDiv.style.cssText = `
-                    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-                    background: rgba(239, 68, 68, 0.9); color: white; padding: 1rem;
-                    border-radius: 8px; z-index: 10000; max-width: 90%;
-                `;
-                errorDiv.textContent = 'StudyFlow failed to initialize. Please refresh the page.';
-                document.body.appendChild(errorDiv);
+                console.error('Error stack:', error.stack);
                 
-                setTimeout(() => errorDiv.remove(), 5000);
+                // Try to initialize with minimal functionality
+                try {
+                    console.log('🔄 Attempting minimal initialization...');
+                    tracker = new EnhancedAssignmentTracker();
+                    settingsManager = new SimpleSettingsManager(tracker);
+                    window.tracker = tracker;
+                    window.settingsManager = settingsManager;
+                    
+                    console.log('✅ Minimal initialization successful');
+                    
+                    // Show success message
+                    const successDiv = document.createElement('div');
+                    successDiv.style.cssText = `
+                        position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+                        background: rgba(16, 185, 129, 0.9); color: white; padding: 1rem;
+                        border-radius: 8px; z-index: 10000; max-width: 90%;
+                    `;
+                    successDiv.textContent = 'StudyFlow initialized with basic features.';
+                    document.body.appendChild(successDiv);
+                    
+                    setTimeout(() => successDiv.remove(), 3000);
+                    
+                } catch (minimalError) {
+                    console.error('❌ Minimal initialization also failed:', minimalError);
+                    
+                    // Show user-friendly error message
+                    const errorDiv = document.createElement('div');
+                    errorDiv.style.cssText = `
+                        position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+                        background: rgba(239, 68, 68, 0.9); color: white; padding: 1rem;
+                        border-radius: 8px; z-index: 10000; max-width: 90%;
+                    `;
+                    errorDiv.textContent = 'StudyFlow failed to initialize. Please refresh the page.';
+                    document.body.appendChild(errorDiv);
+                    
+                    setTimeout(() => errorDiv.remove(), 5000);
+                }
             }
             
             // Secret dev access - Konami code sequence + mobile password
