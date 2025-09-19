@@ -3,6 +3,7 @@
 class SettingsManager {
     constructor(tracker) {
         this.tracker = tracker;
+        this.isInitialized = false;
         this.colorPalettes = {
             ocean: { primary: '#0ea5e9', secondary: '#06b6d4', accent: '#0891b2' },
             sunset: { primary: '#f97316', secondary: '#ea580c', accent: '#dc2626' },
@@ -15,18 +16,38 @@ class SettingsManager {
 
     renderSettingsPage() {
         console.log('SettingsManager.renderSettingsPage() called');
+        
+        // Mark as initialized
+        this.isInitialized = true;
+        
         const settingsContainer = document.getElementById('settings-content');
         if (!settingsContainer) {
             console.error('Settings container not found!');
-            return;
+            
+            // Create settings container if it doesn't exist
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) {
+                const settingsView = document.createElement('div');
+                settingsView.className = 'content-view';
+                settingsView.id = 'settings-view';
+                settingsView.innerHTML = '<div id="settings-content"></div>';
+                mainContent.appendChild(settingsView);
+                
+                console.log('Created missing settings container');
+                // Try again with the newly created container
+                return this.renderSettingsPage();
+            } else {
+                console.error('Main content container not found!');
+                return;
+            }
         }
         console.log('Settings container found, rendering...');
 
         settingsContainer.innerHTML = `
             <section class="priority-section">
                 <h2>⚙️ Settings</h2>
+                <p>Settings loaded successfully!</p>
                 
-                <!-- API Integrations -->
                 <div class="settings-section">
                     <h3>🔗 API Integrations</h3>
                     <div class="integration-item">
@@ -397,18 +418,17 @@ class SettingsManager {
                             <strong>Advanced Analytics</strong>
                             <p>Detailed performance insights and study patterns analysis</p>
                         </div>
-                        <div class="idea-item">
-                            <strong>Cloud Sync</strong>
-                            <p>Synchronize data across multiple devices</p>
-                        </div>
-                        <div class="idea-item">
-                            <strong>AI Study Assistant</strong>
-                            <p>Intelligent suggestions for study planning and time management</p>
+                        <div class="debug-info">
+                        <strong>Debug Info:</strong> Settings manager status: ${this.isInitialized ? 'Ready' : 'Initializing...'}
+                        <div class="debug-actions">
+                            <button onclick="window.settingsManager.renderSettingsPage()" class="debug-btn">Force Reload Settings</button>
+                            <button onclick="console.log(window.settingsManager)" class="debug-btn">Debug Info</button>
                         </div>
                     </div>
                 </div>
                 -->
             </section>
+```
         `;
 
         console.log('Settings HTML rendered, initializing event listeners...');
