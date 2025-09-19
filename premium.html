@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrade to Premium - StudyFlow</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="settings.css">
+    <link rel="stylesheet" href="css/premium.css">
+    <style>
+        /* Additional styles specific to the premium page */
+        .premium-hero {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            border-radius: 12px;
+            margin: 1rem 0 2rem;
+        }
+        
+        .premium-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .premium-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .feature-card h3 {
+            color: #e2e8f0;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .feature-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+        
+        .testimonials {
+            margin: 3rem 0;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .testimonial {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .testimonial-author img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
+        
+        .testimonial-author span {
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        
+        .faq {
+            margin: 3rem 0;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: #e2e8f0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            color: #94a3b8;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1>StudyFlow <span class="premium-indicator">Premium</span></h1>
+            <nav>
+                <a href="index.html">Back to App</a>
+            </nav>
+        </header>
+        
+        <main>
+            <section class="premium-hero">
+                <h1>Upgrade to StudyFlow Premium</h1>
+                <p>Get unlimited access to all premium features and support the continued development of StudyFlow</p>
+                <button id="scroll-to-plans" class="btn btn-primary">View Plans</button>
+            </section>
+            
+            <section id="premium-features">
+                <!-- Premium features will be rendered here by premium-ui.js -->
+            </section>
+            
+            <section class="feature-grid">
+                <div class="feature-card">
+                    <h3>🎨 Custom Themes</h3>
+                    <p>Unlock beautiful color themes and customize your StudyFlow experience to match your style.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>☁️ Cloud Sync</h3>
+                    <p>Access your assignments and notes across all your devices with secure cloud synchronization.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📊 Advanced Analytics</h3>
+                    <p>Get detailed insights into your study habits and performance with advanced analytics.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎭 Live Wallpapers</h3>
+                    <p>Choose from a collection of beautiful live wallpapers to personalize your dashboard.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔔 Smart Reminders</h3>
+                    <p>Never miss a deadline with customizable smart reminders and notifications.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🛡️ Priority Support</h3>
+                    <p>Get priority support with faster response times and dedicated assistance.</p>
+                </div>
+            </section>
+            
+            <section class="testimonials">
+                <h2>What Our Users Say</h2>
+                <div class="testimonial">
+                    <p>"StudyFlow Premium has completely transformed how I manage my assignments. The cloud sync means I can access my work from anywhere!"</p>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/150?img=32" alt="User">
+                        <div>
+                            <span>Alex Johnson</span>
+                            <div>Computer Science Student</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p>"The analytics helped me identify my most productive hours and optimize my study schedule. Worth every penny!"</p>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/150?img=45" alt="User">
+                        <div>
+                            <span>Maria Garcia</span>
+                            <div>Medical Student</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="faq">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What payment methods do you accept?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        We accept all major credit cards, PayPal, and other popular payment methods. All payments are processed securely through our payment partners.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I cancel my subscription anytime?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, you can cancel your subscription at any time. You'll continue to have access to premium features until the end of your billing period.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is there a free trial available?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes! We offer a 7-day free trial for all new users. No credit card is required to start your trial.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I restore my purchase if I switch devices?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Simply log in with the same account on your new device, and your premium status will be automatically restored.
+                    </div>
+                </div>
+            </section>
+            
+            <section id="pricing-plans" style="margin-top: 4rem;">
+                <!-- Pricing plans will be rendered here by premium-ui.js -->
+            </section>
+        </main>
+        
+        <footer class="app-footer">
+            <p>&copy; 2023 StudyFlow. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="js/payments.js"></script>
+    <script src="js/premium-ui.js"></script>
+    <script>
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isOpen = answer.classList.contains('show');
+                
+                // Close all other answers
+                document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('show'));
+                document.querySelectorAll('.faq-question span').forEach(span => (span.textContent = '+'));
+                
+                // Toggle current answer
+                if (!isOpen) {
+                    answer.classList.add('show');
+                    question.querySelector('span').textContent = '−';
+                }
+            });
+        });
+        
+        // Smooth scroll to plans
+        document.getElementById('scroll-to-plans')?.addEventListener('click', () => {
+            document.getElementById('pricing-plans')?.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

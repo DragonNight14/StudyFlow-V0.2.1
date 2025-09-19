@@ -1,0 +1,243 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Capacitor
+android/
+ios/
+dist/
+
+# Build outputs
+build/
+www/
+.output/
+.nuxt/
+.next/
+out/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# temporary folders
+tmp/
+temp/
+
+# PWA Builder output
+pwabuilder-sw.js
+pwabuilder-sw-register.js
+
+# PWA testing and development
+sw-test.js
+pwa-debug.log
+lighthouse-report.html
+lighthouse-report.json
+workbox-*.js
+precache-manifest.*.js
+
+# Service Worker cache debugging
+sw-cache-debug/
+cache-debug.log
+
+# APK build artifacts
+*.apk
+*.aab
+*.keystore
+
+# Android Studio files
+*.iml
+.gradle/
+local.properties
+.navigation/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Xcode files (for iOS)
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+DerivedData/
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace/
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+
+# Netlify
+.netlify/
+
+# Vercel
+.vercel/
+
+# Development and debugging files
+debug.log
+*.debug
+console.log
+
+# Backup files
+*.backup
+*.bak
+*.orig
+*~
+
+# User data and settings (privacy)
+user-data/
+settings-backup/
+*.user
+
+# Live wallpaper cache
+wallpaper-cache/
+*.wallpaper
+
+# Assignment data backups
+assignments-backup/
+*.assignments
+
+# Performance monitoring
+performance.log
+*.perf
+
+# API keys and secrets (security)
+api-keys.js
+secrets.json
+config.local.js
+
+# Testing artifacts
+test-results/
+*.test.log
+coverage-report/
+pwa-test-report.html
+pwa-test-results.json
+checkbox-test.log
+flow-test-results.json
+
+# Deployment artifacts
+deploy.log
+deployment-config.local.json
+
+# HTTPS development certificates
+*.pem
+*.key
+*.crt
+*.cert
+localhost.key
+localhost.crt
+server.key
+server.crt
+
+# Local development server configs
+.http-server-*
+serve.json
+local-server.config.js
+
+# Cache directories
+.cache/
+*.cache
+cache/
+
+# Temporary development files
+*.tmp
+*.temp
+dev-notes.md
+todo.md
+
+# IDE workspace files
+*.workspace
+.vscode/launch.json
+.vscode/tasks.json
+
+# System files
+*.lnk
+*.url
+
+# Browser development profiles and debugging
+chrome-profile/
+firefox-profile/
+browser-debug/
+devtools-*.log
+
+# PWA debugging and profiling
+pwa-profile/
+sw-debug/
+manifest-debug.json
+install-prompt-debug.log
+
+# Mobile testing and debugging
+android-debug/
+ios-debug/
+mobile-test-screenshots/
+device-test-logs/

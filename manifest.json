@@ -1,0 +1,106 @@
+{
+  "id": "assignment-tracker",
+  "name": "StudyFlow",
+  "short_name": "StudyFlow",
+  "description": "Track and manage your academic assignments with ease",
+  "dir": "ltr",
+  "lang": "en",
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b5",
+  "start_url": "./index.html?source=pwa",
+  "display": "standalone",
+  "background_color": "#1e1b4b",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "categories": ["education", "productivity"],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "display_override": ["standalone", "minimal-ui"],
+  "handle_links": "preferred",
+  
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  
+  "shortcuts": [
+    {
+      "name": "Add Assignment",
+      "short_name": "Add",
+      "description": "Add a new assignment",
+      "url": "/index.html?view=add",
+      "icons": [{"src": "icon-192x192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "View All",
+      "short_name": "All",
+      "description": "View all assignments",
+      "url": "/index.html?view=all",
+      "icons": [{"src": "icon-192x192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "Upgrade to Premium",
+      "short_name": "Premium",
+      "description": "Upgrade to premium features",
+      "url": "/index.html?view=premium",
+      "icons": [{"src": "icon-192x192.png", "sizes": "192x192"}]
+    }
+  ],
+  
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Dashboard view"
+    },
+    {
+      "src": "/screenshots/assignment-view.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Assignment details"
+    }
+  ],
+  
+  "payment": {
+    "supported_delegations": [
+      "shippingAddress",
+      "payerName",
+      "payerPhone",
+      "payerEmail"
+    ]
+  },
+  
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  
+  "protocol_handlers": [
+    {
+      "protocol": "web+studyflow",
+      "url": "/index.html?action=%s"
+    }
+  ],
+  
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}
