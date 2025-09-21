@@ -213,9 +213,23 @@ class SettingsManager {
                                 <div class="premium-content">
                                     <div class="premium-icon">🖼️</div>
                                     <h5>Unlock Custom Images</h5>
-
-                        <div class="video-upload-section" id="video-upload-section" style="display: none;">
-                            <div class="premium-gate" id="video-premium-gate">
+                                    <p>Personalize your workspace with your own background images. Upload any image to make it your own.</p>
+                                    <button class="btn btn-premium" onclick="settingsManager.showUpgradeModal('custom-backgrounds')">Upgrade to Premium</button>
+                                </div>
+                            </div>
+                            <div class="upload-area" id="image-upload-area">
+                                <div class="upload-dropzone" id="image-upload-dropzone">
+                                    <div class="upload-icon">📁</div>
+                                    <p>Click to upload or drag & drop</p>
+                                    <small>Supports JPG, PNG, GIF (max 10MB)</small>
+                                </div>
+                                <input type="file" id="background-image-input" accept="image/*" style="display: none;">
+                            </div>
+                            <button class="btn btn-secondary" id="remove-bg-image" style="display: none;">Remove Image</button>
+                        </div>
+                        
+                        <div class="video-upload-section premium-feature" id="video-upload-section" style="display: none;">
+                            <div class="premium-overlay" id="video-premium-gate">
                                 <div class="premium-content">
                                     <div class="premium-icon">🎬</div>
                                     <h5>Unlock Video Backgrounds</h5>
@@ -232,9 +246,9 @@ class SettingsManager {
                                         💡 <strong>Tip:</strong> Larger files may take longer to load. For best performance, keep videos under 50MB
                                     </div>
                                 </div>
-                                <input type="file" id="background-video-input" accept="video/*" style="display: none;" disabled>
+                                <input type="file" id="background-video-input" accept="video/*" style="display: none;">
                             </div>
-                            <button class="btn btn-secondary blurred" id="remove-bg-video" style="display: none;" disabled>Remove Video</button>
+                            <button class="btn btn-secondary" id="remove-bg-video" style="display: none;">Remove Video</button>
                         </div>
                     </div>
                 </div>
@@ -296,11 +310,34 @@ class SettingsManager {
 
         this.initializeEventListeners();
         
-        // Initialize background manager
-        this.backgroundManager = new BackgroundManager(this.tracker);
-        
-        // Initialize background immediately to restore saved backgrounds
-        this.backgroundManager.initializeBackground();
+        // Initialize background manager with error handling
+        try {
+            console.log('🔄 Initializing background manager...');
+            this.backgroundManager = new BackgroundManager(this.tracker);
+            
+            // Initialize background immediately to restore saved backgrounds
+            const savedBackgroundType = localStorage.getItem('background-type') || 'gradient';
+            console.log('🎨 Restoring saved background:', savedBackgroundType);
+            
+            // Update the dropdown to reflect the current background type
+            const bgSelect = document.getElementById('background-type');
+            if (bgSelect) {
+                bgSelect.value = savedBackgroundType;
+                console.log('✅ Updated background type dropdown to:', savedBackgroundType);
+            }
+            
+            // Initialize the background
+            this.backgroundManager.initializeBackground();
+            
+            // Show the correct UI options
+            this.showBackgroundOptions(savedBackgroundType);
+            
+            console.log('✅ Background manager initialized successfully');
+        } catch (error) {
+            console.error('❌ Failed to initialize background manager:', error);
+            // Fallback to gradient background if initialization fails
+            document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+        }
         
         // Apply saved settings on load
         this.applySavedSettings();
@@ -553,9 +590,19 @@ class SettingsManager {
         // Background type change handler
         const backgroundType = document.getElementById('background-type');
         if (backgroundType) {
-            backgroundType.addEventListener('change', (e) => {
+            // Remove any existing event listeners to prevent duplicates
+            const newBackgroundType = backgroundType.cloneNode(true);
+            backgroundType.parentNode.replaceChild(newBackgroundType, backgroundType);
+            
+            // Add new event listener
+            newBackgroundType.addEventListener('change', (e) => {
+                console.log('🎨 Background type changed to:', e.target.value);
                 this.handleBackgroundTypeChange(e.target.value);
             });
+            
+            // Initialize the UI for the current background type
+            const currentType = localStorage.getItem('background-type') || 'gradient';
+            this.showBackgroundOptions(currentType);
         }
 
         // Image upload functionality
@@ -1032,30 +1079,181 @@ class SettingsManager {
     }
 
     showBackgroundOptions(type) {
+        console.log(`🔄 Showing background options for type: ${type}`);
+        
+        // Get all UI elements
         const patternOptions = document.getElementById('pattern-options');
         const imageUploadSection = document.getElementById('image-upload-section');
         const videoUploadSection = document.getElementById('video-upload-section');
+        const videoUploadArea = document.getElementById('video-upload-area');
+        const videoPremiumGate = document.getElementById('video-premium-gate');
+        const imageUploadArea = document.querySelector('#image-upload-section .upload-area');
+        const imagePremiumGate = document.querySelector('#image-upload-section .premium-overlay');
         const backgroundColor = document.getElementById('background-color');
-
+        const removeImageBtn = document.getElementById('remove-bg-image');
+        const removeVideoBtn = document.getElementById('remove-bg-video');
+        const colorPicker = document.getElementById('background-color-picker');
+        
         // Hide all options first
-        if (patternOptions) patternOptions.style.display = 'none';
-        if (imageUploadSection) imageUploadSection.style.display = 'none';
-        if (videoUploadSection) videoUploadSection.style.display = 'none';
-        if (backgroundColor) backgroundColor.style.display = 'none';
+        const allSections = [
+            patternOptions, 
+            imageUploadSection, 
+            videoUploadSection,
+            backgroundColor,
+            removeImageBtn,
+            removeVideoBtn,
+            colorPicker
+        ];
+        
+        allSections.forEach(section => {
+            if (section) section.style.display = 'none';
+        });
+        
+        // Show relevant options based on background type
+        switch (type) {
+            case 'gradient':
+                if (colorPicker) {
+                    colorPicker.style.display = 'block';
+                    // Set up gradient color picker
+                    this.setupGradientColorPickers();
+                }
+                break;
+                
+            case 'pattern':
+                if (patternOptions) {
+                    patternOptions.style.display = 'block';
+                    // Highlight selected pattern if any
+                    const selectedPattern = localStorage.getItem('selected-pattern');
+                    if (selectedPattern) {
+                        const patternElement = document.querySelector(`[data-pattern="${selectedPattern}"]`);
+                        if (patternElement) {
+                            document.querySelectorAll('.pattern-option').forEach(opt => 
+                                opt.classList.remove('selected')
+                            );
+                            patternElement.classList.add('selected');
+                        }
+                    }
+                }
+                break;
+                
+            case 'image':
+                if (imageUploadSection) {
+                    imageUploadSection.style.display = 'block';
+                    // Show remove button if there's a saved image
+                    const hasImage = localStorage.getItem('background-image');
+                    if (removeImageBtn) {
+                        removeImageBtn.style.display = hasImage ? 'block' : 'none';
+                    }
+                    // Show premium gate if needed
+                    if (imagePremiumGate) {
+                        imagePremiumGate.style.display = this.tracker.isPremiumUser() ? 'none' : 'flex';
+                    }
+                }
+                break;
+                
+            case 'video':
+                if (videoUploadSection) {
+                    videoUploadSection.style.display = 'block';
+                    // Show remove button if there's a saved video
+                    const hasVideo = localStorage.getItem('background-video');
+                    if (removeVideoBtn) {
+                        removeVideoBtn.style.display = hasVideo ? 'block' : 'none';
+                    }
+                    // Show premium gate if needed
+                    const isPremium = this.tracker.isPremiumUser();
+                    if (videoPremiumGate) {
+                        videoPremiumGate.style.display = isPremium ? 'none' : 'flex';
+                    }
+                    // Show upload area for premium users
+                    if (videoUploadArea) {
+                        videoUploadArea.style.display = isPremium ? 'block' : 'none';
+                    }
+                }
+                break;
+                
+            case 'solid':
+                if (colorPicker) {
+                    colorPicker.style.display = 'block';
+                    // Set up solid color picker
+                    this.setupSolidColorPicker();
+                }
+                break;
+        }
 
-        // Show relevant options without changing background
+        // Handle premium feature checks
+        const isPremium = this.isPremiumUser();
+        
+        // Show relevant options based on type
         switch (type) {
             case 'pattern':
-                if (patternOptions) patternOptions.style.display = 'block';
+                if (patternOptions) {
+                    patternOptions.style.display = 'grid';
+                    // Highlight current pattern if any
+                    const currentPattern = localStorage.getItem('background-pattern') || 'dots';
+                    document.querySelectorAll('.pattern-option').forEach(option => {
+                        option.classList.toggle('active', option.dataset.pattern === currentPattern);
+                    });
+                }
                 break;
+                
             case 'image':
-                if (imageUploadSection) imageUploadSection.style.display = 'block';
+                if (imageUploadSection) {
+                    imageUploadSection.style.display = 'block';
+                    
+                    if (isPremium) {
+                        if (imageUploadArea) imageUploadArea.style.display = 'flex';
+                        if (imagePremiumGate) imagePremiumGate.style.display = 'none';
+                        
+                        // Show current image if any
+                        const currentImage = localStorage.getItem('background-image');
+                        if (currentImage) {
+                            const preview = document.getElementById('image-preview');
+                            if (preview) {
+                                preview.style.backgroundImage = `url("${currentImage}")`;
+                                preview.style.display = 'block';
+                            }
+                            if (removeImageBtn) {
+                                removeImageBtn.style.display = 'inline-block';
+                                removeImageBtn.disabled = false;
+                                removeImageBtn.classList.remove('blurred');
+                            }
+                        }
+                    } else {
+                        if (imageUploadArea) imageUploadArea.style.display = 'none';
+                        if (imagePremiumGate) imagePremiumGate.style.display = 'flex';
+                    }
+                }
                 break;
+                
             case 'video':
-                if (videoUploadSection) videoUploadSection.style.display = 'block';
+                if (videoUploadSection) {
+                    videoUploadSection.style.display = 'block';
+                    
+                    if (isPremium) {
+                        if (videoUploadArea) videoUploadArea.style.display = 'block';
+                        if (videoPremiumGate) videoPremiumGate.style.display = 'none';
+                        
+                        // Show current video if any
+                        const currentVideo = localStorage.getItem('background-video');
+                        if (currentVideo && removeVideoBtn) {
+                            removeVideoBtn.style.display = 'inline-block';
+                            removeVideoBtn.disabled = false;
+                            removeVideoBtn.classList.remove('blurred');
+                        }
+                    } else {
+                        if (videoUploadArea) videoUploadArea.style.display = 'none';
+                        if (videoPremiumGate) videoPremiumGate.style.display = 'flex';
+                    }
+                }
                 break;
+                
             case 'solid':
-                if (backgroundColor) backgroundColor.style.display = 'inline-block';
+                if (backgroundColor) {
+                    backgroundColor.style.display = 'inline-block';
+                    // Set the current color if any
+                    const currentColor = localStorage.getItem('solid-bg-color') || '#0f172a';
+                    backgroundColor.value = currentColor;
+                }
                 break;
         }
     }
@@ -1456,30 +1654,37 @@ class SettingsManager {
     }
 
     handleBackgroundTypeChange(type) {
-        // Show/hide UI options
+        console.log('🎨 Handling background type change:', type);
+        
+        // First update the UI to show the appropriate options
         this.showBackgroundOptions(type);
 
-        // Apply the background change
+        // Then apply the background change
         switch (type) {
+            case 'gradient':
+                this.backgroundManager.applyGradientBackground();
+                break;
             case 'pattern':
-                this.backgroundManager.applyBackground('pattern');
+                this.backgroundManager.applyPatternBackground();
                 break;
             case 'image':
-                this.backgroundManager.applyBackground('image');
+                this.backgroundManager.applyImageBackground();
                 break;
             case 'video':
-                this.backgroundManager.applyBackground('video');
+                this.backgroundManager.applyVideoBackground();
                 break;
             case 'solid':
-                this.backgroundManager.applyBackground('solid');
-                break;
-            case 'gradient':
-                this.backgroundManager.applyBackground('gradient');
+                this.backgroundManager.applySolidBackground();
                 break;
         }
 
+        // Save the selection
         localStorage.setItem('background-type', type);
+        console.log('💾 Saved background type:', type);
         this.tracker.logPerformanceEvent('Background Changed', type);
+        
+        // Force a UI update to ensure everything is in sync
+        this.updateSettingsVisuals();
     }
 
     closeAllOverlays() {
