@@ -1,0 +1,192 @@
+STUDYFLOW PRIVACY POLICY
+
+Last Updated: September 20, 2025
+
+1. INFORMATION WE COLLECT
+
+1.1 Personal Information
+- Email address (for account creation and support)
+- Name (optional, for personalization)
+- Device information (for app functionality and troubleshooting)
+
+1.2 Usage Data
+- Assignment and task data (stored locally on your device)
+- App usage statistics (anonymous)
+- Crash reports and error logs (anonymous)
+
+1.3 Local Storage
+- All your assignments, tasks, and study data are stored locally on your device
+- We do not upload your personal study content to our servers
+
+2. HOW WE USE YOUR INFORMATION
+
+2.1 Core Functionality
+- Provide assignment tracking and task management features
+- Sync data across your devices (if you enable cloud sync)
+- Send notifications for assignments and deadlines
+
+2.2 App Improvement
+- Analyze usage patterns to improve app performance
+- Fix bugs and add new features
+- Provide customer support
+
+2.3 Communications
+- Send important app updates and announcements
+- Respond to your support requests
+- Notify you about new features (with your consent)
+
+3. INFORMATION SHARING
+
+3.1 We Do Not Sell Your Data
+- We never sell, rent, or trade your personal information
+- Your study data remains private and secure
+
+3.2 Third-Party Services
+- Canvas API: We connect to your school's Canvas system only with your explicit permission
+- Analytics: We use anonymous analytics to improve the app
+- Payment Processing: Secure payment processing for premium features
+
+3.3 Legal Requirements
+- We may disclose information if required by law or to protect our rights
+
+4. DATA SECURITY
+
+4.1 Local Storage
+- Your data is primarily stored on your device
+- We use encryption for any data transmission
+
+4.2 Security Measures
+- Industry-standard security practices
+- Regular security updates and patches
+- Secure authentication for account access
+
+5. YOUR RIGHTS
+
+5.1 Data Access
+- View all data we have about you
+- Request a copy of your data
+
+5.2 Data Control
+- Delete your account and associated data
+- Opt-out of analytics and marketing communications
+- Control what data is shared with third-party services
+
+5.3 Data Portability
+- Export your assignments and tasks
+- Transfer data between devices
+
+6. CHILDREN'S PRIVACY
+
+6.1 Age Requirements
+- StudyFlow is designed for users 13 years and older
+- We do not knowingly collect data from children under 13
+- If we discover we have collected data from a child under 13, we will delete it immediately
+
+6.2 Parental Controls
+- Parents can contact us to review or delete their child's data
+- We encourage parental involvement in their child's app usage
+
+7. COOKIES AND TRACKING
+
+7.1 Local Storage
+- We use local storage to save your preferences and settings
+- No tracking cookies are used for advertising purposes
+
+7.2 Analytics
+- Anonymous usage analytics to improve app performance
+- You can opt-out of analytics in the app settings
+
+8. INTERNATIONAL USERS
+
+8.1 Data Transfer
+- Your data may be processed in countries other than your own
+- We ensure appropriate safeguards are in place
+
+8.2 Regional Compliance
+- We comply with GDPR, CCPA, and other applicable privacy laws
+- Contact us for region-specific privacy rights
+
+9. UPDATES TO THIS POLICY
+
+9.1 Policy Changes
+- We may update this privacy policy from time to time
+- You will be notified of significant changes
+- Continued use of the app constitutes acceptance of updates
+
+9.2 Notification
+- In-app notifications for major policy changes
+- Email notifications (if you've provided an email address)
+
+10. CONTACT INFORMATION
+
+For privacy-related questions or concerns:
+
+Email: privacy@studyflow.app
+Support: support@studyflow.app
+
+Mailing Address:
+StudyFlow Privacy Team
+[Your Address]
+[City, State, ZIP Code]
+
+Response Time: We aim to respond to privacy requests within 30 days.
+
+11. SPECIFIC FEATURES
+
+11.1 Canvas Integration
+- We only access Canvas data you explicitly authorize
+- Canvas credentials are securely stored and encrypted
+- You can revoke Canvas access at any time
+
+11.2 Pomodoro Timer
+- Timer data is stored locally on your device
+- No personal timing data is transmitted to our servers
+
+11.3 Assignment Tracking
+- All assignment data remains on your device
+- Optional cloud backup with your explicit consent
+
+11.4 Notifications
+- Push notifications for assignment deadlines
+- You can disable notifications in device settings
+
+12. DATA RETENTION
+
+12.1 Account Data
+- We retain account data as long as your account is active
+- Data is deleted within 30 days of account deletion
+
+12.2 Anonymous Data
+- Anonymous usage statistics may be retained for app improvement
+- No personally identifiable information is included
+
+13. THIRD-PARTY LINKS
+
+13.1 External Services
+- StudyFlow may contain links to third-party websites or services
+- This privacy policy does not apply to third-party services
+- We encourage you to read their privacy policies
+
+14. CALIFORNIA PRIVACY RIGHTS (CCPA)
+
+If you are a California resident, you have the right to:
+- Know what personal information we collect and how it's used
+- Delete personal information we have collected
+- Opt-out of the sale of personal information (we don't sell data)
+- Non-discrimination for exercising your privacy rights
+
+15. EUROPEAN PRIVACY RIGHTS (GDPR)
+
+If you are in the European Union, you have the right to:
+- Access your personal data
+- Rectify inaccurate personal data
+- Erase your personal data
+- Restrict processing of your personal data
+- Data portability
+- Object to processing
+
+---
+
+This privacy policy is effective as of the date listed above and applies to all users of StudyFlow.
+
+By using StudyFlow, you acknowledge that you have read and understood this privacy policy.

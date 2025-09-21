@@ -14,6 +14,26 @@ class BackgroundManager {
     applyBackground(type) {
         const body = document.body;
         
+        // Check for premium features
+        if ((type === 'image' || type === 'video') && !this.tracker.isPremiumUser()) {
+            // Show upgrade modal for non-premium users
+            if (typeof settingsManager !== 'undefined') {
+                settingsManager.showUpgradeModal(type === 'image' ? 'custom-backgrounds' : 'video-backgrounds');
+            }
+            // Revert to previous background type
+            const prevType = localStorage.getItem('background-type') || 'gradient';
+            if (prevType === type) {
+                // If already on this type, default to gradient
+                type = 'gradient';
+            } else {
+                // Otherwise, revert to previous type
+                type = prevType;
+                // Update the dropdown to reflect the actual background type
+                const bgSelect = document.getElementById('background-type');
+                if (bgSelect) bgSelect.value = type;
+            }
+        }
+        
         // Save the background type
         localStorage.setItem('background-type', type);
         
@@ -33,6 +53,8 @@ class BackgroundManager {
             if (existingVideo._resizeHandler) {
                 window.removeEventListener('resize', existingVideo._resizeHandler);
             }
+            // Pause video before removing
+            if (existingVideo.pause) existingVideo.pause();
             existingVideo.remove();
         }
         if (existingOverlay) {
@@ -134,21 +156,120 @@ class BackgroundManager {
     }
 
     applyImageBackground() {
-        const savedImage = localStorage.getItem('background-image');
-        if (savedImage) {
-            document.body.style.background = `url(${savedImage}) center/cover no-repeat`;
+        const imageUrl = localStorage.getItem('background-image');
+        if (imageUrl) {
+            document.body.style.backgroundImage = `url("${imageUrl}")`;
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
+            document.body.style.backgroundAttachment = 'fixed';
             document.body.classList.add('image-bg');
+            
+            // Show the image upload section and hide others
+            this.showBackgroundOptions('image');
+        } else {
+            // Show the image upload interface if no image is set
+            this.showBackgroundOptions('image');
+            // Default to gradient if no image is set
+            this.applyGradientBackground();
         }
     }
 
     applyVideoBackground() {
-        const savedVideo = localStorage.getItem('background-video');
-        if (savedVideo) {
+        console.log('🎬 Applying video background...');
+        document.body.classList.add('video-bg');
+        
+        // Get the video URL from localStorage
+        const videoUrl = localStorage.getItem('background-video');
+        
+        // Show the video upload section and hide others
+        this.showBackgroundOptions('video');
+        
+        // Get all the necessary elements
+        const videoUploadSection = document.getElementById('video-upload-section');
+        const videoUploadArea = document.getElementById('video-upload-area');
+        const videoPremiumGate = document.getElementById('video-premium-gate');
+        const videoInput = document.getElementById('background-video-input');
+        const videoDropzone = document.getElementById('video-upload-dropzone');
+        const removeBtn = document.getElementById('remove-bg-video');
+        
+        if (videoUrl) {
             console.log('🎬 Applying video background from localStorage');
             document.body.classList.add('video-bg');
-            this.createVideoBackground(savedVideo);
+            this.createVideoBackground(videoUrl);
+            
+            // Show remove button for video
+            if (removeBtn) {
+                removeBtn.style.display = 'inline-block';
+                removeBtn.disabled = false;
+                removeBtn.classList.remove('blurred');
+                
+                // Add click handler for remove button
+                removeBtn.onclick = () => this.removeVideoBackground();
+            }
+            
+            // Hide upload area if video is already set
+            if (videoUploadArea) videoUploadArea.style.display = 'none';
+            if (videoPremiumGate) videoPremiumGate.style.display = 'none';
         } else {
+            // Show the video upload interface if no video is set
+            if (videoUploadSection) {
+                videoUploadSection.style.display = 'block';
+                
+                if (this.tracker.isPremiumUser()) {
+                    if (videoUploadArea) videoUploadArea.style.display = 'block';
+                    if (videoPremiumGate) videoPremiumGate.style.display = 'none';
+                } else {
+                    if (videoUploadArea) videoUploadArea.style.display = 'none';
+                    if (videoPremiumGate) videoPremiumGate.style.display = 'flex';
+                }
+            }
             console.log('⚠️ No video background found in localStorage');
+        }
+        
+        // Set up drag and drop for video upload
+        if (videoDropzone && videoInput) {
+            // Click handler for dropzone
+            videoDropzone.onclick = () => videoInput.click();
+            
+            // Drag and drop handlers
+            const preventDefaults = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            };
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                videoDropzone.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            // Highlight dropzone when dragging over
+            ['dragenter', 'dragover'].forEach(eventName => {
+                videoDropzone.addEventListener(eventName, () => {
+                    videoDropzone.classList.add('drag-over');
+                }, false);
+            });
+            
+            // Remove highlight when not dragging over
+            ['dragleave', 'drop'].forEach(eventName => {
+                videoDropzone.addEventListener(eventName, () => {
+                    videoDropzone.classList.remove('drag-over');
+                }, false);
+            });
+            
+            // Handle file drop
+            videoDropzone.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length > 0) {
+                    this.handleVideoUpload(files[0]);
+                }
+            }, false);
+            
+            // Handle file input change
+            videoInput.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    this.handleVideoUpload(e.target.files[0]);
+                }
+            });
         }
     }
 

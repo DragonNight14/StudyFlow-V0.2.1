@@ -215,6 +215,7 @@
 
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
+            <div class="bottom-nav-notch" id="dev-settings-notch">⚙️</div>
             <button class="nav-btn active" id="home-btn">
                 <span class="nav-icon">🏠</span>
                 <span class="nav-label" data-translate="home">Home</span>
@@ -232,6 +233,29 @@
                 <span class="nav-label" data-translate="settings">Settings</span>
             </button>
         </nav>
+
+        <!-- Dev Settings Popup -->
+        <div class="dev-settings-popup" id="dev-settings-popup">
+            <div class="dev-settings-header">
+                <h3>Developer Settings</h3>
+                <button class="close-dev-settings" id="close-dev-settings">×</button>
+            </div>
+            <div class="dev-settings-content">
+                <div class="dev-setting">
+                    <h4>Danger Zone</h4>
+                    <button class="btn btn-danger" id="clear-data-btn">Clear All Data</button>
+                    <p class="dev-setting-desc">This will delete all your assignments and settings.</p>
+                </div>
+                <div class="dev-setting">
+                    <h4>Debug Info</h4>
+                    <div class="debug-info">
+                        <p>App Version: <span id="app-version">v0.2</span></p>
+                        <p>Last Sync: <span id="last-sync">Never</span></p>
+                        <p>Storage Used: <span id="storage-used">0 KB</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Create Assignment Button -->
         <button class="create-assignment-btn" id="create-assignment-btn">
