@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyFlow - Google Play Feature Graphic Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f0f0f0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .feature-graphic {
+            width: 1024px;
+            height: 500px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            margin: 20px auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+
+        .content-area {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+        }
+
+        .left-content {
+            flex: 1;
+            text-align: left;
+            padding-right: 40px;
+        }
+
+        .app-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .tagline {
+            font-size: 24px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .features {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 24px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: #f59e0b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+
+        .cta-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 24px;
+            padding: 12px 24px;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            display: inline-block;
+        }
+
+        .right-content {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-icon {
+            width: 200px;
+            height: 200px;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .icon-bg {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            border-radius: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .icon-inner {
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .document-icon {
+            width: 60px;
+            height: 75px;
+            background: white;
+            border-radius: 6px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .document-header {
+            height: 15px;
+            background: #f59e0b;
+            border-radius: 6px 6px 0 0;
+            margin-bottom: 8px;
+        }
+
+        .document-lines {
+            padding: 0 8px;
+        }
+
+        .document-line {
+            height: 3px;
+            background: #e5e7eb;
+            margin-bottom: 4px;
+            border-radius: 2px;
+        }
+
+        .document-line:nth-child(2) {
+            width: 80%;
+        }
+
+        .document-line:nth-child(3) {
+            width: 60%;
+        }
+
+        .checkmark {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 8px;
+        }
+
+        .download-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 20px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .instructions {
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: left;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .instructions ul {
+            line-height: 1.6;
+            color: #4b5563;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>StudyFlow - Google Play Feature Graphic</h1>
+        
+        <div class="feature-graphic" id="featureGraphic">
+            <div class="background-pattern"></div>
+            <div class="content-area">
+                <div class="left-content">
+                    <div class="app-title">StudyFlow</div>
+                    <div class="tagline">Organize. Focus. Succeed.</div>
+                    <div class="features">
+                        <div class="feature-item">
+                            <div class="feature-icon">📝</div>
+                            <span>Assignment Tracking</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⏱️</div>
+                            <span>Pomodoro Timer</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎯</div>
+                            <span>Task Management</span>
+                        </div>
+                    </div>
+                    <div class="cta-badge">Download Free Today</div>
+                </div>
+                <div class="right-content">
+                    <div class="app-icon">
+                        <div class="icon-bg">
+                            <div class="icon-inner">
+                                <div class="document-icon">
+                                    <div class="document-header"></div>
+                                    <div class="document-lines">
+                                        <div class="document-line"></div>
+                                        <div class="document-line"></div>
+                                        <div class="document-line"></div>
+                                    </div>
+                                    <div class="checkmark">✓</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="download-btn" onclick="downloadAsImage()">Download as PNG (1024x500)</button>
+
+        <div class="instructions">
+            <h3>Google Play Feature Graphic Requirements ✅</h3>
+            <ul>
+                <li><strong>Dimensions:</strong> 1024 x 500 pixels (16:9 aspect ratio) ✅</li>
+                <li><strong>File Format:</strong> 32-bit PNG with alpha channel ✅</li>
+                <li><strong>Maximum File Size:</strong> 1MB ✅</li>
+                <li><strong>Text Safety:</strong> No important text in top 96px (reserved for app title overlay) ✅</li>
+                <li><strong>Brand Consistency:</strong> Uses your StudyFlow brand colors and design ✅</li>
+            </ul>
+            
+            <h3>How to Use:</h3>
+            <ul>
+                <li>Click "Download as PNG" to save the feature graphic</li>
+                <li>Upload the downloaded PNG file to Google Play Console</li>
+                <li>The graphic will appear in your app's store listing</li>
+            </ul>
+            
+            <h3>Customization Options:</h3>
+            <ul>
+                <li>Edit the tagline by modifying the "tagline" div</li>
+                <li>Change features by updating the "feature-item" elements</li>
+                <li>Adjust colors in the CSS variables</li>
+                <li>Modify the call-to-action text in "cta-badge"</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function downloadAsImage() {
+            const element = document.getElementById('featureGraphic');
+            
+            // Create canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 1024;
+            canvas.height = 500;
+            
+            // Use html2canvas library for better rendering
+            if (typeof html2canvas !== 'undefined') {
+                html2canvas(element, {
+                    width: 1024,
+                    height: 500,
+                    scale: 1,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: null
+                }).then(canvas => {
+                    // Download the image
+                    const link = document.createElement('a');
+                    link.download = 'studyflow-google-play-feature-graphic.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            } else {
+                // Fallback method - load html2canvas
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                script.onload = () => {
+                    html2canvas(element, {
+                        width: 1024,
+                        height: 500,
+                        scale: 1,
+                        useCORS: true,
+                        allowTaint: true,
+                        backgroundColor: null
+                    }).then(canvas => {
+                        const link = document.createElement('a');
+                        link.download = 'studyflow-google-play-feature-graphic.png';
+                        link.href = canvas.toDataURL('image/png');
+                        link.click();
+                    });
+                };
+                document.head.appendChild(script);
+            }
+        }
+
+        // Alternative method using modern browser APIs
+        function downloadAsImageModern() {
+            const element = document.getElementById('featureGraphic');
+            
+            // Create a new canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 1024;
+            canvas.height = 500;
+            
+            // Create SVG with foreign object
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', '1024');
+            svg.setAttribute('height', '500');
+            
+            const foreignObject = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
+            foreignObject.setAttribute('width', '1024');
+            foreignObject.setAttribute('height', '500');
+            
+            const clonedElement = element.cloneNode(true);
+            foreignObject.appendChild(clonedElement);
+            svg.appendChild(foreignObject);
+            
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const img = new Image();
+            
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0);
+                
+                // Download
+                canvas.toBlob(function(blob) {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.download = 'studyflow-google-play-feature-graphic.png';
+                    link.href = url;
+                    link.click();
+                    URL.revokeObjectURL(url);
+                }, 'image/png');
+            };
+            
+            img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+        }
+    </script>
+</body>
+</html>
